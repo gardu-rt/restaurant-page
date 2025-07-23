@@ -5,7 +5,6 @@ export const home = function (parent) {
 
   const paragraph = document.createElement("p");
 
-  // Naik satu folder untuk akses about.txt dari script/
   fetch("/about.txt")
     .then(response => {
       if (!response.ok) {
