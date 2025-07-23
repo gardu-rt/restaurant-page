@@ -1,5 +1,7 @@
 const path = require("path");
 const HtmlWebpackPlugin = require("html-webpack-plugin");
+const CopyWebpackPlugin = require("copy-webpack-plugin");
+const ImageMinimizerPlugin = require("image-minimizer-webpack-plugin");
 
 module.exports = {
   mode: "development",
@@ -21,6 +23,11 @@ module.exports = {
   plugins: [
     new HtmlWebpackPlugin({
       template: "./src/template.html"
+    }),
+    new CopyWebpackPlugin({
+      patterns: [
+        { from: "public", to: "." }
+      ]
     })
   ],
   module: {
@@ -33,6 +40,16 @@ module.exports = {
         test: /\.(png|jpg|gif|jpeg|svg)$/i,
         type: "asset/resource"
       }
+    ]
+  },
+  optimization: {
+    minimizer: [
+      "...",
+      new ImageMinimizerPlugin({
+        minimizer: {
+          implementation: ImageMinimizerPlugin.sharpMinify,
+        }
+      })
     ]
   }
 };
